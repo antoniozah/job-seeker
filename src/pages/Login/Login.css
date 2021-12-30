@@ -1,0 +1,58 @@
+.loginpage {
+    padding: 46px 33px 20px;
+}
+
+.form {
+    width: 100%;
+    max-width: 307px;
+    margin: 0 auto;
+}
+
+.form__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__group:not(:last-child) {
+    margin-bottom: 6px;
+}
+
+.form__group label {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.form__group input[type='text'],
+.form__group input[type='password'] {
+    border: 0;
+    outline: 0;
+    padding: 12px 20px;
+    background-color: var(--lighter-gray);
+}
+
+.form__button {
+    display: flex;
+    justify-content: center;
+}
+
+.form__button input {
+    margin-top: 30px;
+    padding: 12px 24px;
+}
+
+::-webkit-input-placeholder {
+    /* Edge */
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+}
+
+::placeholder {
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+}
