@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header/Header';
-import { AuthUser } from './interfaces';
+import { IAuthUser } from './interfaces';
 import JobBoard from './pages/JobBoard/JobBoard';
 import Login from './pages/Login/Login';
 
@@ -10,14 +10,19 @@ function App() {
     const [isAuth, setIsAuth] = useState<Partial<string | boolean | null>>(
         localStorage.getItem('auth') ? localStorage.getItem('auth') : false
     );
-    const [user, setUser] = useState<Partial<AuthUser>>({});
+    const [user, setUser] = useState<Partial<string | null>>(
+        localStorage.getItem('userAuth')
+            ? localStorage.getItem('userAuth')
+            : null
+    );
 
     const onAuthStatusChange = (status: string | boolean) => {
         setIsAuth(status);
     };
 
-    const onAuthSetUser = (user: AuthUser) => {
-        setUser(user);
+    const onAuthSetUser = (user: IAuthUser) => {
+        localStorage.setItem('userAuth', user.email);
+        setUser(localStorage.getItem('userAuth'));
         console.log(user);
     };
 
@@ -30,7 +35,12 @@ function App() {
                         path="/"
                         element={
                             isAuth ? (
-                                <JobBoard auth={isAuth} authUser={user} />
+                                <JobBoard
+                                    auth={isAuth}
+                                    authStatus={onAuthStatusChange}
+                                    isAuthUser={onAuthSetUser}
+                                    authUser={user}
+                                />
                             ) : (
                                 <Navigate to="/login" />
                             )

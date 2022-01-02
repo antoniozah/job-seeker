@@ -1,0 +1,27 @@
+.greeting-hero {
+    padding: 20px 0;
+}
+
+.greeting-hero__user {
+    border-bottom: 1px solid #000;
+    margin-bottom: 20px;
+}
+
+.greeting-hero__user > p {
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.greeting-hero__user .text-lead {
+    font-size: 20px;
+}
+
+.greeting-hero__search {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.greeting-hero__search > p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}

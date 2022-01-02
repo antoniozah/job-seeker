@@ -39,20 +39,3 @@
     margin-top: 30px;
     padding: 12px 24px;
 }
-
-::-webkit-input-placeholder {
-    /* Edge */
-    font-family: 'Roboto', sans-serif;
-    color: #000;
-}
-
-:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    font-family: 'Roboto', sans-serif;
-    color: #000;
-}
-
-::placeholder {
-    font-family: 'Roboto', sans-serif;
-    color: #000;
-}
