@@ -42,7 +42,6 @@
 
 .job__meta {
     display: flex;
-    margin-bottom: 16px;
 }
 
 .job__meta > div:not(:last-child) {
@@ -52,4 +51,8 @@
 .job__meta span {
     font-weight: 700;
     color: #000;
+}
+
+.job__apply-btn {
+    margin-top: 16px;
 }

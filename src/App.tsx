@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
-import Header from './components/Header/Header';
+
 import { IAuthUser } from './interfaces';
 import JobBoard from './pages/JobBoard/JobBoard';
 import Login from './pages/Login/Login';
+import Header from './components/Header/Header';
 
 function App() {
     const [isAuth, setIsAuth] = useState<Partial<string | boolean | null>>(

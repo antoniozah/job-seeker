@@ -5,6 +5,8 @@ import './JobBoard.css';
 import GreetingHero from '../../components/GreetingHero/GreetingHero';
 import { useNavigate } from 'react-router-dom';
 import JobList from '../../components/JobList/JobList';
+import { useDispatch } from 'react-redux';
+import { setJobList } from '../../features/jobListSlice';
 
 interface JobBoardProps {
     auth: string | boolean | null;
@@ -14,10 +16,13 @@ interface JobBoardProps {
 }
 
 const JobBoard = (props: JobBoardProps) => {
-    const [jobList, setJobList] = useState<IJobList[]>([]);
+    // const [jobList, setJobList] = useState<IJobList[]>([]);
     const [jobsAmount, setJobsAmount] = useState<number>(0);
 
+    const dispatch = useDispatch();
+
     let navigate = useNavigate();
+
     useEffect(() => {
         const config = {
             headers: {
@@ -38,8 +43,7 @@ const JobBoard = (props: JobBoardProps) => {
                 if (response.status !== 200) {
                     throw new Error();
                 } else {
-                    setJobList(response.data.items);
-                    setJobsAmount(response.data.totalCount);
+                    dispatch(setJobList(response.data));
                 }
             } catch (error) {
                 localStorage.clear();
@@ -54,7 +58,7 @@ const JobBoard = (props: JobBoardProps) => {
     return (
         <div>
             <GreetingHero user={props.authUser} />
-            <JobList jobs={jobList} totalJobs={jobsAmount} />
+            <JobList />
         </div>
     );
 };

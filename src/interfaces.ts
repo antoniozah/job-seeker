@@ -18,3 +18,7 @@ export interface IJobList {
     createdAt: number;
     validUntil: number;
 }
+
+export interface IJobDetails extends IJobList {
+    description: string;
+}

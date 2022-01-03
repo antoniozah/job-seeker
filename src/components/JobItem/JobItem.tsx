@@ -1,45 +1,94 @@
-import React from 'react';
-import { IJobList } from '../../interfaces';
-import dummyLogo from '../../images/company-dymmy-logo.png';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { IJobDetails, IJobList } from '../../interfaces';
+import JobCardItem from '../JobCardItem/JobCardItem';
+import JobDetModal from '../JobDetModal/JobDetModal';
 import './JobItem.css';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { toggleModal } from '../../features/modalStatusSlice';
+import { setJobDetails } from '../../features/jobDetailsSlice';
 
 interface JobItemProps {
-    jobData: IJobList;
+    job: IJobList;
 }
 
 const JobItem = (props: JobItemProps) => {
+    // const [jobDetails, setJobDetails] = useState<Partial<IJobDetails | any>>(
+    //     []
+    // );
+    const [hasError, setHasError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<any>({});
+
+    const modalStatus = useSelector(
+        (state: RootState) => state.modalStatus.value
+    );
+    const dispatch = useDispatch();
+
+    const config = {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+    };
+
+    console.log('Hello', props.job);
+
+    const getJobDetails = async (id: number) => {
+        try {
+            setHasError(false);
+            setErrorMessage('');
+            const response = await axios.get(
+                `https://ka-fe-assignment.azurewebsites.net/api/job-posts/${id}`,
+                config
+            );
+
+            if (response.status === 200) {
+                console.log(response.data);
+                dispatch(setJobDetails(response.data));
+            } else {
+                throw new Error();
+            }
+        } catch (error: any) {
+            if (error.response.status === 401) {
+                alert('Authentication Error!');
+                setHasError(true);
+                setErrorMessage({
+                    message: 'Only authenticated users can access the data',
+                    hasBtn: true,
+                });
+                // localStorage.clear();
+                // navigate('/login');
+            } else {
+                setHasError(true);
+                setErrorMessage({
+                    message: 'Job post does not exist',
+                    hasBtn: false,
+                });
+            }
+        }
+    };
+
+    const buttonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        getJobDetails(props.job.id);
+        dispatch(toggleModal());
+    };
+
+    if (modalStatus)
+        return <JobDetModal hasError={hasError} errorMessage={errorMessage} />;
+
     return (
         <article className="job">
-            <div className="job__wrapper">
-                <div className="job__header">
-                    <figure className="job__logo">
-                        <img src={dummyLogo} alt="company logo" />
-                    </figure>
-                    <div className="job__details">
-                        <p className="job__company">
-                            {props.jobData.companyName}
-                        </p>
-                        <h3 className="job__title">{props.jobData.title}</h3>
-                    </div>
-                </div>
-                <div className="job__meta">
-                    <div className="job__posted-date">
-                        <p>Date Posted</p>
-                        <span>12 Jun</span>
-                    </div>
-                    <div className="job__expired-date">
-                        <p>Apply until</p>
-                        <span>2 Jul</span>
-                    </div>
-                    <div className="job__location">
-                        <p>Location</p>
-                        <span>Spain</span>
-                    </div>
-                </div>
-                <button className="btn btn--big job__apply-btn">
+            <JobCardItem jobData={props.job} />
+            {window.location.pathname === '/' && (
+                <button
+                    className="btn btn--big job__apply-btn"
+                    onClick={buttonHandler}
+                >
                     Apply Now
                 </button>
-            </div>
+            )}
         </article>
     );
 };
