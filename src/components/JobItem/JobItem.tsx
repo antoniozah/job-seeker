@@ -63,9 +63,6 @@ const JobItem = (props: JobItemProps) => {
         document.body.classList.add('modal-open');
     };
 
-    // if (modalStatus)
-    //     return <JobDetModal hasError={hasError} errorMessage={errorMessage} />;
-
     return (
         <article className="job">
             <JobCardItem jobData={props.job} />
