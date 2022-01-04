@@ -20,6 +20,10 @@ body {
     line-height: 1.172;
 }
 
+body.modal-open {
+    overflow-y: hidden;
+}
+
 .container {
     max-width: 768px;
     padding: 0 20px;

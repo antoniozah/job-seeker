@@ -6,6 +6,7 @@ import { IAuthUser } from './interfaces';
 import JobBoard from './pages/JobBoard/JobBoard';
 import Login from './pages/Login/Login';
 import Header from './components/Header/Header';
+import SuccessApply from './pages/SuccessApply/SuccessApply';
 
 function App() {
     const [isAuth, setIsAuth] = useState<Partial<string | boolean | null>>(
@@ -56,6 +57,10 @@ function App() {
                             authUser={onAuthSetUser}
                         />
                     }
+                />
+                <Route
+                    path="/success-application/:title"
+                    element={<SuccessApply />}
                 />
             </Routes>
         </div>

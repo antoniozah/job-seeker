@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { IJobDetails, IJobList } from '../../interfaces';
 import JobCardItem from '../JobCardItem/JobCardItem';
@@ -9,21 +10,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { toggleModal } from '../../features/modalStatusSlice';
 import { setJobDetails } from '../../features/jobDetailsSlice';
+import {
+    ErrorHandler,
+    setErrorMessage,
+    clearErrorMessage,
+} from '../../features/modalHandlingSlice';
 
 interface JobItemProps {
     job: IJobList;
 }
 
 const JobItem = (props: JobItemProps) => {
-    // const [jobDetails, setJobDetails] = useState<Partial<IJobDetails | any>>(
-    //     []
-    // );
-    const [hasError, setHasError] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<any>({});
-
-    const modalStatus = useSelector(
-        (state: RootState) => state.modalStatus.value
-    );
     const dispatch = useDispatch();
 
     const config = {
@@ -32,12 +29,9 @@ const JobItem = (props: JobItemProps) => {
         },
     };
 
-    console.log('Hello', props.job);
-
     const getJobDetails = async (id: number) => {
         try {
-            setHasError(false);
-            setErrorMessage('');
+            dispatch(clearErrorMessage());
             const response = await axios.get(
                 `https://ka-fe-assignment.azurewebsites.net/api/job-posts/${id}`,
                 config
@@ -51,20 +45,13 @@ const JobItem = (props: JobItemProps) => {
             }
         } catch (error: any) {
             if (error.response.status === 401) {
-                alert('Authentication Error!');
-                setHasError(true);
-                setErrorMessage({
-                    message: 'Only authenticated users can access the data',
-                    hasBtn: true,
-                });
+                dispatch(ErrorHandler());
+                dispatch(setErrorMessage('401'));
                 // localStorage.clear();
                 // navigate('/login');
             } else {
-                setHasError(true);
-                setErrorMessage({
-                    message: 'Job post does not exist',
-                    hasBtn: false,
-                });
+                dispatch(ErrorHandler());
+                dispatch(setErrorMessage('404'));
             }
         }
     };
@@ -73,10 +60,11 @@ const JobItem = (props: JobItemProps) => {
         event.preventDefault();
         getJobDetails(props.job.id);
         dispatch(toggleModal());
+        document.body.classList.add('modal-open');
     };
 
-    if (modalStatus)
-        return <JobDetModal hasError={hasError} errorMessage={errorMessage} />;
+    // if (modalStatus)
+    //     return <JobDetModal hasError={hasError} errorMessage={errorMessage} />;
 
     return (
         <article className="job">

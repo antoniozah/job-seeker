@@ -5,8 +5,10 @@ import './JobBoard.css';
 import GreetingHero from '../../components/GreetingHero/GreetingHero';
 import { useNavigate } from 'react-router-dom';
 import JobList from '../../components/JobList/JobList';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import { setJobList } from '../../features/jobListSlice';
+import JobDetModal from '../../components/JobDetModal/JobDetModal';
 
 interface JobBoardProps {
     auth: string | boolean | null;
@@ -16,8 +18,9 @@ interface JobBoardProps {
 }
 
 const JobBoard = (props: JobBoardProps) => {
-    // const [jobList, setJobList] = useState<IJobList[]>([]);
-    const [jobsAmount, setJobsAmount] = useState<number>(0);
+    const modalStatus = useSelector(
+        (state: RootState) => state.modalStatus.value
+    );
 
     const dispatch = useDispatch();
 
@@ -59,6 +62,7 @@ const JobBoard = (props: JobBoardProps) => {
         <div>
             <GreetingHero user={props.authUser} />
             <JobList />
+            {modalStatus && <JobDetModal />}
         </div>
     );
 };

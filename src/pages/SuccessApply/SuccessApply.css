@@ -1,0 +1,22 @@
+.success-page__wrapper {
+    padding-top: 163px;
+    text-align: center;
+}
+
+.success-page__wrapper figure {
+    display: inline-flex;
+    margin-bottom: 22px;
+}
+
+.success-page__message {
+    margin-bottom: 36px;
+}
+
+.success-page__message p {
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.success-page__message p:not(:last-child) {
+    margin-bottom: 7px;
+}

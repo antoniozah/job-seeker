@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import modalStatusReducer from '../features/modalStatusSlice';
 import jobDetailsReducer from '../features/jobDetailsSlice';
 import jobListReducer from '../features/jobListSlice';
+import modalHandlingReducer from '../features/modalHandlingSlice';
 
 export const store = configureStore({
     reducer: {
         modalStatus: modalStatusReducer,
         jobDetails: jobDetailsReducer,
         jobListData: jobListReducer,
+        modalHandling: modalHandlingReducer,
     },
 });
 

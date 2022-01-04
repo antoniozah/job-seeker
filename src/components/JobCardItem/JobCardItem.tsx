@@ -5,7 +5,7 @@ import { IJobList } from '../../interfaces';
 import { RootState } from '../../app/store';
 
 interface JobCardItemProps {
-    jobData: any;
+    jobData: IJobList;
 }
 
 const JobCardItem = (props: JobCardItemProps) => {
