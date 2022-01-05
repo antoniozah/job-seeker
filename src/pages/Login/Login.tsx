@@ -32,6 +32,10 @@ const Login = (props: LoginProps) => {
             password: pass,
         };
 
+        login(data);
+    };
+
+    const login = (data: { email: string; password: string }) => {
         axios
             .post('https://ka-fe-assignment.azurewebsites.net/api/login', data)
             .then((response) => {
@@ -47,7 +51,11 @@ const Login = (props: LoginProps) => {
                 });
                 navigate('/');
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error);
+                setEmail('');
+                setPass('');
+            });
     };
     return (
         <div className="loginpage">

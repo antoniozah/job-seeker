@@ -4,55 +4,18 @@
     background-color: var(--smoke-white);
 }
 
-.job__header {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 16px;
-}
-
-.job__logo {
-    display: inline-flex;
-    margin: 0;
-    padding: 6px;
-    background-color: #fff;
-    flex-shrink: 0;
-}
-
-.job__logo > img {
-    width: 71px;
-    height: 26px;
-    object-fit: contain;
-}
-
-.job__details {
-    margin-left: 12px;
-    font-weight: 700;
-}
-
-.job__company {
-    font-size: 12px;
-    color: var(--light-text);
-    margin-bottom: 6px;
-}
-
-.job__title {
-    font-size: 18px;
-    color: #000;
-}
-
-.job__meta {
-    display: flex;
-}
-
-.job__meta > div:not(:last-child) {
-    margin-right: 15px;
-}
-
-.job__meta span {
-    font-weight: 700;
-    color: #000;
-}
-
 .job__apply-btn {
     margin-top: 16px;
+}
+
+@media only screen and (min-width: 767px) {
+    .job {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .job__apply-btn {
+        max-width: 139px;
+    }
 }

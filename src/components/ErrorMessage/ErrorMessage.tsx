@@ -1,5 +1,8 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../app/store';
+import { toggleModal } from '../../features/modalStatusSlice';
 import './ErrorMessage.css';
 
 interface ErrorMessageProps {
@@ -7,10 +10,18 @@ interface ErrorMessageProps {
 }
 
 const ErrorMessage = (props: ErrorMessageProps) => {
+    const modalStatus = useSelector(
+        (state: RootState) => state.modalStatus.value
+    );
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleBtnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         localStorage.clear();
+        if (modalStatus) {
+            dispatch(toggleModal());
+            document.body.classList.remove('modal-open');
+        }
         navigate('/login');
     };
 

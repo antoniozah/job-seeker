@@ -1,35 +1,36 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import './JobCardItem.css';
 import dummyLogo from '../../images/company-dymmy-logo.png';
 import { IJobList } from '../../interfaces';
-import { RootState } from '../../app/store';
-
+import { timestampToDate } from '../../helpers';
 interface JobCardItemProps {
     jobData: IJobList;
 }
 
 const JobCardItem = (props: JobCardItemProps) => {
     return (
-        <div className="job__wrapper">
-            <div className="job__header">
-                <figure className="job__logo">
+        <div className="jobcard">
+            <div className="jobcard__header">
+                <figure className="jobcard__logo">
                     <img src={dummyLogo} alt="company logo" />
                 </figure>
-                <div className="job__details">
-                    <p className="job__company">{props.jobData.companyName}</p>
-                    <h3 className="job__title">{props.jobData.title}</h3>
+                <div className="jobcard__details">
+                    <p className="jobcard__company">
+                        {props.jobData.companyName}
+                    </p>
+                    <h3 className="jobcard__title">{props.jobData.title}</h3>
                 </div>
             </div>
-            <div className="job__meta">
-                <div className="job__posted-date">
+            <div className="jobcard__meta">
+                <div className="jobcard__posted-date">
                     <p>Date Posted</p>
-                    <span>12 Jun</span>
+                    <span>{timestampToDate(props.jobData.createdAt)}</span>
                 </div>
-                <div className="job__expired-date">
+                <div className="jobcard__expired-date">
                     <p>Apply until</p>
-                    <span>2 Jul</span>
+                    <span>{timestampToDate(props.jobData.validUntil)}</span>
                 </div>
-                <div className="job__location">
+                <div className="jobcard__location">
                     <p>Location</p>
                     <span>{props.jobData.address}</span>
                 </div>

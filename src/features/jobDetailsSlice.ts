@@ -14,7 +14,7 @@ export const jobDetailsSlice = createSlice({
     initialState,
     reducers: {
         setJobDetails: (state, action: PayloadAction<any>) => {
-            state.fetchedJobDetails = { ...action.payload };
+            state.fetchedJobDetails = action.payload;
         },
     },
 });

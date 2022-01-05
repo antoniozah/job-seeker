@@ -8,20 +8,18 @@ interface GreetingHeroProps {
 const GreetingHero = (props: GreetingHeroProps) => {
     return (
         <div className="greeting-hero">
-            <div className="container">
-                <div className="greeting-hero__wrapper">
-                    <div className="greeting-hero__user">
-                        <p>Hello</p>
-                        <p className="text-lead">{props.user}</p>
-                    </div>
-                    <div className="greeting-hero__search">
-                        <p>Search for a job</p>
-                        <input
-                            type="text"
-                            name="jobQuery"
-                            placeholder="Enter keyword"
-                        />
-                    </div>
+            <div className="greeting-hero__wrapper">
+                <div className="greeting-hero__user">
+                    <p>Hello</p>
+                    <p className="text-lead">{props.user}</p>
+                </div>
+                <div className="greeting-hero__search">
+                    <p>Search for a job</p>
+                    <input
+                        type="text"
+                        name="jobQuery"
+                        placeholder="Enter keyword"
+                    />
                 </div>
             </div>
         </div>

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { IAuthUser, IJobList } from '../../interfaces';
-import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
 import './JobBoard.css';
-import GreetingHero from '../../components/GreetingHero/GreetingHero';
-import { useNavigate } from 'react-router-dom';
-import JobList from '../../components/JobList/JobList';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { setJobList } from '../../features/jobListSlice';
 import JobDetModal from '../../components/JobDetModal/JobDetModal';
+import JobList from '../../components/JobList/JobList';
+import GreetingHero from '../../components/GreetingHero/GreetingHero';
+import LoadMore from '../../components/LoadMore/LoadMore';
+import useJobFetch from '../../useJobFetch';
 
 interface JobBoardProps {
     auth: string | boolean | null;
@@ -18,50 +16,42 @@ interface JobBoardProps {
 }
 
 const JobBoard = (props: JobBoardProps) => {
+    const [page, setPage] = useState<number>(1);
+
     const modalStatus = useSelector(
         (state: RootState) => state.modalStatus.value
     );
 
-    const dispatch = useDispatch();
+    const { data, hasMore, loading, error, jobsAmount } = useJobFetch(page);
+    const loadMore = () => {
+        setPage((prevPage) => prevPage + 1);
+    };
 
-    let navigate = useNavigate();
+    const pageEnd = useRef<HTMLHeadingElement>(null!);
 
     useEffect(() => {
-        const config = {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('token'),
-            },
-            params: {
-                page: 1,
-                sizePerPage: 5,
-            },
-        };
+        if (loading) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    if (entries[0].isIntersecting && hasMore) {
+                        setTimeout(() => {
+                            loadMore();
+                        }, 500);
+                    }
+                },
+                { threshold: 1, rootMargin: '10px' }
+            );
+            observer.observe(pageEnd.current);
+        }
+    }, [hasMore, loading]);
 
-        const getData = async () => {
-            try {
-                const response = await axios.get(
-                    `https://ka-fe-assignment.azurewebsites.net/api/job-posts`,
-                    config
-                );
-                if (response.status !== 200) {
-                    throw new Error();
-                } else {
-                    dispatch(setJobList(response.data));
-                }
-            } catch (error) {
-                localStorage.clear();
-                props.authStatus(false);
-                props.isAuthUser({});
-                navigate('/login');
-                console.log(error);
-            }
-        };
-        getData();
-    }, []);
     return (
-        <div>
+        <div className="container">
             <GreetingHero user={props.authUser} />
-            <JobList />
+            <JobList data={data} jobsAmount={jobsAmount} />
+            <div className="loading" ref={pageEnd}>
+                <LoadMore />
+            </div>
             {modalStatus && <JobDetModal />}
         </div>
     );

@@ -1,0 +1,70 @@
+.modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.modal__title {
+    font-size: 18px;
+}
+
+.modal__close {
+    position: absolute;
+    top: 7px;
+    right: 9px;
+    padding: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    z-index: 9;
+}
+
+.modal__card-item {
+    padding: 16px;
+    background-color: var(--smoke-white);
+}
+
+.modal__description {
+    position: relative;
+    width: calc(100% + 20px);
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    height: 90%;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-bottom: 40px;
+}
+
+.modal__description #job-description h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.modal__description #job-description p {
+    font-size: 14px;
+}
+
+#job-description {
+    padding-bottom: 70px;
+}
+
+.modal__button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    cursor: pointer;
+    z-index: 9;
+}
+
+@media only screen and (min-width: 767px) {
+    .modal__description {
+        max-height: 75vh;
+        margin-left: -11px;
+        margin-right: -9px;
+    }
+}

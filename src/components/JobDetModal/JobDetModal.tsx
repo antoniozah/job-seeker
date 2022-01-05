@@ -1,7 +1,5 @@
 import React from 'react';
-import { IJobDetails, IJobList } from '../../interfaces';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-
 import './JobDetModal.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';

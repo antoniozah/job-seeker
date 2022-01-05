@@ -34,6 +34,7 @@ const JobDetails = (props: JobDetailsProps) => {
             document.body.classList.remove('modal-open');
         }
     };
+
     return (
         <>
             <div className="modal__header">
