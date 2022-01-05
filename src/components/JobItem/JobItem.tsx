@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
-import { IJobDetails, IJobList } from '../../interfaces';
+import React from 'react';
+
+import { IJobList } from '../../interfaces';
 import JobCardItem from '../JobCardItem/JobCardItem';
-import JobDetModal from '../JobDetModal/JobDetModal';
 import './JobItem.css';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
