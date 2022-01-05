@@ -5,6 +5,7 @@ import './JobDetails.css';
 import JobCardItem from '../JobCardItem/JobCardItem';
 import { RootState } from '../../app/store';
 import { toggleModal } from '../../features/modalStatusSlice';
+import { resetJobDetails } from '../../features/jobDetailsSlice';
 
 interface JobDetailsProps {
     hasCloseBtn?: boolean;
@@ -25,12 +26,14 @@ const JobDetails = (props: JobDetailsProps) => {
     const handleCloseModal = () => {
         dispatch(toggleModal());
         document.body.classList.remove('modal-open');
+        dispatch(resetJobDetails());
     };
 
     const handleApplicationBtn = () => {
         navigate(`/success-application/${job.title}?${job.id}`);
         if (modalStatus) {
             dispatch(toggleModal());
+
             document.body.classList.remove('modal-open');
         }
     };

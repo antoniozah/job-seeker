@@ -16,10 +16,13 @@ export const jobDetailsSlice = createSlice({
         setJobDetails: (state, action: PayloadAction<any>) => {
             state.fetchedJobDetails = action.payload;
         },
+        resetJobDetails: (state) => {
+            state.fetchedJobDetails = [];
+        },
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { setJobDetails } = jobDetailsSlice.actions;
+export const { setJobDetails, resetJobDetails } = jobDetailsSlice.actions;
 
 export default jobDetailsSlice.reducer;

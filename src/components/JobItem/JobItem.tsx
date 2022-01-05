@@ -6,8 +6,7 @@ import JobCardItem from '../JobCardItem/JobCardItem';
 import JobDetModal from '../JobDetModal/JobDetModal';
 import './JobItem.css';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
+import { useDispatch } from 'react-redux';
 import { toggleModal } from '../../features/modalStatusSlice';
 import { setJobDetails } from '../../features/jobDetailsSlice';
 import {
@@ -38,7 +37,6 @@ const JobItem = (props: JobItemProps) => {
             );
 
             if (response.status === 200) {
-                console.log(response.data);
                 dispatch(setJobDetails(response.data));
             } else {
                 throw new Error();
@@ -47,8 +45,6 @@ const JobItem = (props: JobItemProps) => {
             if (error.response.status === 401) {
                 dispatch(ErrorHandler());
                 dispatch(setErrorMessage('401'));
-                // localStorage.clear();
-                // navigate('/login');
             } else {
                 dispatch(ErrorHandler());
                 dispatch(setErrorMessage('404'));
